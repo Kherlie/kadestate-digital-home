@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building, Search, Layers, MapPin, Trending, ArrowRight } from "lucide-react";
+import { Building, Search, Layers, MapPin, TrendingUp, ArrowRight } from "lucide-react";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,7 +33,7 @@ const Home = () => {
   
   const stats = [
     { icon: Building, label: "Properties", value: "250+" },
-    { icon: Trending, label: "Growth", value: "15%" },
+    { icon: TrendingUp, label: "Growth", value: "15%" },
     { icon: MapPin, label: "Locations", value: "20+" },
   ];
 
