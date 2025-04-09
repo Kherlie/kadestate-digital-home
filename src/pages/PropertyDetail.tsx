@@ -50,6 +50,9 @@ const PropertyDetail = () => {
   };
   
   const handleViewVirtualTour = () => {
+    // Open the Matterport 360° virtual tour in a new tab
+    window.open("https://my.matterport.com/show/?m=UooQuiXKbFY", "_blank");
+    
     toast({
       title: "360° Virtual Tour",
       description: "Loading high-quality virtual tour...",
