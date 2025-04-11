@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AppLayout from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, MapPin, Square, Home, Eye, Share, ArrowDown, ShoppingBag, SendHorizontal } from "lucide-react";
+import { ChevronLeft, MapPin, Square, Home, Eye, Share, ArrowDown, ShoppingBag, SendHorizontal, Map } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 
@@ -29,6 +29,7 @@ const PropertyDetail = () => {
     bedrooms: 3,
     bathrooms: 2,
     yearBuilt: 2020,
+    coordinates: [7.4398, 10.5167], // Coordinates for Barnawa, Kaduna
     description: "This beautifully designed modern apartment offers luxurious living in one of Kaduna's most desirable neighborhoods. With spacious rooms, high-quality finishes, and excellent security, this property is perfect for professionals and families alike.",
     features: [
       "24/7 Security",
@@ -39,7 +40,8 @@ const PropertyDetail = () => {
       "Air Conditioning"
     ],
     owner: "John Doe",
-    blockchainId: "0x7a9fe22691c811ea339401bbb2a5e09f997c31"
+    blockchainId: "0x7a9fe22691c811ea339401bbb2a5e09f997c31",
+    hasVirtualTour: true, // Flag to determine if the property has a virtual tour
   };
   
   const handleListOnMarketplace = () => {
@@ -56,6 +58,17 @@ const PropertyDetail = () => {
     toast({
       title: "360° Virtual Tour",
       description: "Loading high-quality virtual tour...",
+    });
+  };
+  
+  const handleViewOnMap = () => {
+    // Create Google Maps URL with the coordinates
+    const mapsUrl = `https://www.google.com/maps?q=${property.coordinates[1]},${property.coordinates[0]}&z=15`;
+    window.open(mapsUrl, "_blank");
+    
+    toast({
+      title: "View on Map",
+      description: "Opening location in Google Maps...",
     });
   };
   
@@ -184,16 +197,32 @@ const PropertyDetail = () => {
                   ))}
                 </div>
                 
-                <Button 
-                  onClick={handleViewVirtualTour}
-                  className="w-full mb-4"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  View 360° Virtual Tour
-                </Button>
-                <p className="text-center text-xs text-kadestate-neutral-500 mb-6">
-                  Virtual tour generated with a high-end $2,500 camera for maximum quality
-                </p>
+                <div className="space-y-4">
+                  {property.hasVirtualTour && (
+                    <Button 
+                      onClick={handleViewVirtualTour}
+                      className="w-full"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      View 360° Virtual Tour
+                    </Button>
+                  )}
+
+                  <Button 
+                    onClick={handleViewOnMap}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <Map className="h-4 w-4 mr-2" />
+                    View on Map
+                  </Button>
+                </div>
+                
+                {property.hasVirtualTour && (
+                  <p className="text-center text-xs text-kadestate-neutral-500 mt-2 mb-6">
+                    Virtual tour generated with a high-end $2,500 camera for maximum quality
+                  </p>
+                )}
               </TabsContent>
               
               <TabsContent value="ownership" className="animate-fade-in mt-4">
